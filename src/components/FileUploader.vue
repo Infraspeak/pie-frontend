@@ -60,7 +60,7 @@
         text-align: center;
         font-size: 3rem;
         font-weight: lighter;
-        margin-bottom: 7rem;
+        margin-bottom: 9rem;
         margin-top: 0
     }
     svg {
@@ -68,7 +68,7 @@
         left: 50%;
         transform: translate(-50%);
         z-index: 1;
-        top: 50px;
+        top: 70px;
     }
     .upload {
       display: flex;

@@ -13,7 +13,7 @@
     import { defineComponent } from 'vue'
     import Pusher from 'pusher-js'
 
-    import uploadFiles from './components/uploadFiles.vue'
+    import uploadFiles from './components/FileUploader.vue'
 
     Pusher.logToConsole = true
 
