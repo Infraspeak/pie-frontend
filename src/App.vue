@@ -9,6 +9,7 @@
     <main>
         <FileUploader v-show="!this.file && !isLoading" @file-uploaded="onFileUploaded"/>
         <Loading v-show="isLoading" />
+        <Ready v-show="this.file && !isLoading" />
     </main>
 </template>
 
@@ -18,6 +19,7 @@
 
     import FileUploader from './components/FileUploader.vue'
     import Loading from './components/Loading.vue'
+    import Ready from './components/Ready.vue'
 
     Pusher.logToConsole = true
 
@@ -60,7 +62,8 @@
         name: 'App',
         components: {
             FileUploader,
-            Loading
+            Loading,
+            Ready
         },
         data (): ComponentData {
             return {
