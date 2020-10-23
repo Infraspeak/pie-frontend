@@ -99,7 +99,7 @@
         },
         methods: {
             async onFileUploaded (file: File) {
-                // this.isLoading = true
+                this.isLoading = true
 
                 this.file = file
                 const win = window as any
