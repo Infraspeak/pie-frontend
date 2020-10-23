@@ -42,7 +42,9 @@
         isLoading: boolean;
         results: Result[];
         channelName: string;
-        channel: Channel;
+        channel: Channel | null;
+        result: Result | null;
+        error: string | null;
         issueList: boolean;
     }
 
@@ -80,7 +82,6 @@
         data (): ComponentData {
             const uuid = generateUUID()
             const channelName = `pie-${uuid}`
-            const channel = pusher.subscribe(channelName)
 
             return {
                 uuid,
@@ -88,17 +89,15 @@
                 file: null,
                 isLoading: false,
                 results: [],
-                channel,
+                channel: null,
+                result: null,
+                error: null,
                 issueList: false
-            }
-        },
-        watch: {
-            file (value) {
-                console.log('file', value)
             }
         },
         methods: {
             async onFileUploaded (file: File) {
+                this.error = null
                 this.isLoading = true
 
                 this.file = file
@@ -110,25 +109,28 @@
                 formData.append('file', this.file)
                 formData.append('uuid', this.uuid)
 
-                const response = await fetch(API_FILES_ENPOINT, {
-                    method: 'POST',
-                    body: formData,
-                    headers: {
-                        Accept: 'application/json'
-                    }
-                })
-
-                const data = await response.json()
-
-                this.isLoading = false
-
-                console.log('response', data)
-
-                this.channel.bind('my-event', this.onMyEvent)
+                try {
+                    await fetch(API_FILES_ENPOINT, {
+                        method: 'POST',
+                        body: formData,
+                        headers: {
+                            Accept: 'application/json'
+                        }
+                    })
+                } catch (error) {
+                    this.error = 'Error loading issues'
+                } finally {
+                    this.isLoading = false
+                }
             },
             onMyEvent (data: any) {
-                console.log(data)
+                this.result = data.payload as Result
+                console.log(this.result)
             }
+        },
+        mounted () {
+            this.channel = pusher.subscribe(this.channelName)
+            this.channel.bind('parsed-file', this.onMyEvent)
         },
         unmounted () {
             pusher.unsubscribe(this.channelName)
