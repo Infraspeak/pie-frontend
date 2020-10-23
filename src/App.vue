@@ -23,17 +23,16 @@
 
     Pusher.logToConsole = true
 
-    // const pusher = new Pusher('9e8983378d5ecccac51e', {
-    //     cluster: 'eu'
-    // })
-
-    // const channel = pusher.subscribe('my-channel')
+    const pusher = new Pusher('9e8983378d5ecccac51e', {
+        cluster: 'eu'
+    })
 
     interface ComponentData {
         uuid: string | null;
         file: File | null;
         isLoading: boolean;
         results: Result[];
+        channel: Pusher | null;
     }
 
     type IssueStatus = 'open' | 'closed'
@@ -57,6 +56,8 @@
         issues: Issue[];
     }
 
+    const API_FILES_ENPOINT = 'http://e9e2ccc8e0b9.ngrok.io/api/files'
+
     export default defineComponent({
         name: 'App',
         components: {
@@ -69,43 +70,43 @@
                 uuid: null,
                 file: null,
                 isLoading: false,
-                results: []
-            }
-        },
-        watch: {
-            file (value) {
-                console.log('file', value)
+                results: [],
+                channel: null
             }
         },
         methods: {
-            onFileUploaded (file: File) {
+            async onFileUploaded (file: File) {
                 this.isLoading = true
                 this.file = file
+
+                const formData = new FormData()
+
+                formData.append('file', this.file)
+                formData.append('uuid', this.uuid!)
+
+                const response = await fetch(API_FILES_ENPOINT, {
+                    method: 'POST',
+                    body: formData,
+                    headers: {
+                        Accept: 'application/json'
+                    }
+                })
+
+                const data = await response.json()
+
+                console.log('response', data)
             },
             createUUID () {
                 return 'xxxxxxxx-xxxx-4xxx-yxxx-xxxxxxxxxxxx'.replace(/[xy]/g, function (c) {
                     const r = Math.random() * 16 | 0; const v = c === 'x' ? r : (r & 0x3 | 0x8)
                     return v.toString(16)
                 })
-            },
-            async generateUUID () {
-                this.uuid = this.createUUID()
-
-                const reponse = await fetch('url', {
-                    method: 'POST',
-                    body: JSON.stringify({
-                        uuid: this.uuid
-                    })
-                })
-
-                const data = await reponse.json()
-                console.log('data', data)
             }
         },
         async created () {
-            // await this.generateUUID()
+            this.uuid = this.createUUID()
 
-            // channel.bind('my-event', this.onIssuesUpdate)
+            pusher.subscribe(`pie-${this.uuid}`)
         }
     })
 </script>
