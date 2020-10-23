@@ -21,7 +21,7 @@
         data () {
             return {
                 file: null,
-                results: []
+                results: [] as any[]
             }
         },
         watch: {
