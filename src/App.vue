@@ -15,7 +15,6 @@
             <Loading v-show="isLoading" />
             <Ready v-show="file && !isLoading" />
         </template>
-        
         <IssueList v-else />
     </main>
 </template>
