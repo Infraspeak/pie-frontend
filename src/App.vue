@@ -58,7 +58,7 @@
         issues: Issue[];
     }
 
-    const API_FILES_ENPOINT = 'http://e9e2ccc8e0b9.ngrok.io/api/files'
+    const API_FILES_ENPOINT = 'http://0e3edfecced9.ngrok.io/api/files'
 
     export default defineComponent({
         name: 'App',
