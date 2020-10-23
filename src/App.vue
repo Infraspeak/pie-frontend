@@ -78,6 +78,8 @@
             async onFileUploaded (file: File) {
                 this.isLoading = true
                 this.file = file
+                const win = window as any
+                win.uuid = this.uuid
 
                 const formData = new FormData()
 
