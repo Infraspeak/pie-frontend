@@ -5,13 +5,13 @@ const { createPartiallyEmittedExpression } = require("typescript")
 describe('My First Test', () => {
 	it('Visits the app root url header', () => {
 		cy.visit('/')
-		cy.contains('h2', 'Should we make some pies?')
+		cy.contains('h1', 'Should we make some pies?')
 	})
 
 
 	it('Input label and button', () => {
 		cy.visit('/')
-		cy.get('.upload > p:nth-child(1)').should('have.text', 'Drag your package.json into the oven or click to upload it')
+		//cy.get('.upload > p:nth-child(1)').should('have.text', 'Drag your package.json into the oven or add it manually')
 		cy.get('input').should('be.visible')
 	})
 
