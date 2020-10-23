@@ -15,7 +15,8 @@
 
 <script lang="ts">
     import { defineComponent } from 'vue'
-    import Pusher from 'pusher-js'
+    import Pusher, { Channel } from 'pusher-js'
+    import { generateUUID } from './helpers/uuid'
 
     import FileUploader from './components/FileUploader.vue'
     import Loading from './components/Loading.vue'
@@ -28,11 +29,12 @@
     })
 
     interface ComponentData {
-        uuid: string | null;
+        uuid: string;
         file: File | null;
         isLoading: boolean;
         results: Result[];
-        channel: Pusher | null;
+        channelName: string;
+        channel: Channel;
     }
 
     type IssueStatus = 'open' | 'closed'
@@ -66,23 +68,29 @@
             Ready
         },
         data (): ComponentData {
+            const uuid = generateUUID()
+            const channelName = `pie-${uuid}`
+            const channel = pusher.subscribe(channelName)
+
             return {
-                uuid: null,
+                uuid,
+                channelName,
                 file: null,
                 isLoading: false,
                 results: [],
-                channel: null
+                channel
             }
         },
         methods: {
             async onFileUploaded (file: File) {
                 this.isLoading = true
+
                 this.file = file
 
                 const formData = new FormData()
 
                 formData.append('file', this.file)
-                formData.append('uuid', this.uuid!)
+                formData.append('uuid', this.uuid)
 
                 const response = await fetch(API_FILES_ENPOINT, {
                     method: 'POST',
@@ -94,19 +102,18 @@
 
                 const data = await response.json()
 
+                this.isLoading = false
+
                 console.log('response', data)
+
+                this.channel.bind('my-event', this.onMyEvent)
             },
-            createUUID () {
-                return 'xxxxxxxx-xxxx-4xxx-yxxx-xxxxxxxxxxxx'.replace(/[xy]/g, function (c) {
-                    const r = Math.random() * 16 | 0; const v = c === 'x' ? r : (r & 0x3 | 0x8)
-                    return v.toString(16)
-                })
+            onMyEvent (data: any) {
+                console.log(data)
             }
         },
-        async created () {
-            this.uuid = this.createUUID()
-
-            pusher.subscribe(`pie-${this.uuid}`)
+        unmounted () {
+            pusher.unsubscribe(this.channelName)
         }
     })
 </script>
