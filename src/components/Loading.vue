@@ -17,7 +17,7 @@
 
     h3 {
         font-weight: lighter;
-        font-size: 2rem;
+        font-size: 2.5rem;
         margin: 0;
     }
 }
