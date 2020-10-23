@@ -7,7 +7,7 @@
 
         <div class="upload">
             <p>Drag your <span>package.json</span> into the oven <br/> or <span>add it manually</span></p>
-            <input name="file" type="file" accept="application/JSON" @change="onFileChange" required/>
+            <input name="file" type="file" accept="application/JSON" @change="onFileChange($event.target.files)" required/>
         </div>
     </div>
 </template>
@@ -18,8 +18,8 @@
     export default defineComponent({
         name: 'Upload',
         methods: {
-            onFileChange (file: File) {
-                this.$emit('file-uploaded', file)
+            onFileChange (files: File[]) {
+                this.$emit('file-uploaded', files[0])
             }
         }
     })
