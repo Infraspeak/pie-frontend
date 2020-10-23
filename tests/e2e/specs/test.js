@@ -4,22 +4,11 @@ import { PusherMock } from "pusher-js-mock";
 const { createPartiallyEmittedExpression } = require("typescript")
 
 describe('My First Test', () => {
-	before(()=> {
-		//Cypress.config('baseUrl', 'https://www.reddit.com');
-		// cy.server();
-		// cy.route({
-		// 	method: 'POST',
-		// 	url: 'url'
-		// }).as('redditLogin');
-	});
-
 
 	it('Visits the app root url header', () => {
 		cy.visit('/')
 		cy.contains('h1', 'Should we make some pies?')
 	})
-
-
 
 	it('Input label and button', () => {
 		cy.visit('/')
