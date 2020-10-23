@@ -2,11 +2,15 @@
 
 :root {
     --blue: #18a0fb;
+    --black: #000000;
     --white: #ffffff;
     --grey: #ccc;
     --dark-blue: #24292E;
     --button: #115ABE;
     --tab: #525252;
+    --issues: #E5E5E5;
+    --tag: #CCE3F5;
+    --description: #777777; 
   }
 
 * {
