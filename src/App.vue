@@ -1,12 +1,16 @@
 <template>
     <div>
-        <form>
-            <label for="file">Insert file</label>
-            <input name="file" type="file" accept="application/JSON" @v-model="file"/>
-            <button>Upload</button>
-        </form>
+        <h1>Should we make some pies?</h1>
+        <label for="file">Drag your package.json into the oven or click to upload it</label>
+        <input name="file" type="file" accept="application/JSON" @v-model="file" required/>
+        <button @click="loadIssues">Load Issues</button>
+        <div>
+            <div>{{ file }}</div>
+            <div v-for="result in results" :key="result.name">
+                {{ result.name }}
+            </div>
+        </div>
     </div>
-
 </template>
 
 <script lang="ts">
@@ -16,12 +20,23 @@
         name: 'App',
         data () {
             return {
-                file: null
+                file: null,
+                results: []
             }
         },
         watch: {
             file (value) {
                 console.log(value)
+            }
+        },
+        methods: {
+            loadIssues () {
+                this.results = [
+                    { name: 'issue 1' },
+                    { name: 'issue 2' },
+                    { name: 'issue 3' },
+                    { name: 'issue 4' }
+                ]
             }
         }
     })
