@@ -1,12 +1,24 @@
 import 'cypress-file-upload';
+import { PusherMock } from "pusher-js-mock";
 
 const { createPartiallyEmittedExpression } = require("typescript")
 
 describe('My First Test', () => {
+	before(()=> {
+		//Cypress.config('baseUrl', 'https://www.reddit.com');
+		// cy.server();
+		// cy.route({
+		// 	method: 'POST',
+		// 	url: 'url'
+		// }).as('redditLogin');
+	});
+
+
 	it('Visits the app root url header', () => {
 		cy.visit('/')
 		cy.contains('h1', 'Should we make some pies?')
 	})
+
 
 
 	it('Input label and button', () => {
@@ -21,6 +33,42 @@ describe('My First Test', () => {
 		const yourFixturePath = 'package_example.json';
 		cy.get('input').attachFile(yourFixturePath);
 
+		cy.get('.loading')
+
+
+		cy.window()
+		.then((win) => {
+			const uuid = win.uuid
+			// initializing PusherMock
+			const pusher = new PusherMock();
+			// subscribing to a Pusher channel
+			const channel = pusher.subscribe(`pie-${uuid}`);
+			// emitting an event
+			const payload = {
+				"repo": {
+					"name": "vendor/package",
+					"url": "repo url"
+				},
+				"issues": [
+					{
+						"url": "",
+						"title": "issue title",
+						"description": "",
+						"author": "",
+						"status": "open/closed",
+						"tags": [
+							"hacktoberfest",
+							"cheaters"
+						],
+						"id": "",
+						"date_opened": ""
+					}
+				]
+			}
+			channel.emit("event-name", payload);
+		})
 
 	})
+	
 })
+
