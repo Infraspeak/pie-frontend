@@ -7,13 +7,7 @@
 
         <div class="upload">
             <p>Drag your <span>package.json</span> into the oven <br/> or <span>add it manually</span></p>
-            <input name="file" type="file" accept="application/JSON" @v-model="file" @change="loadIssues" required/>
-        </div>
-        <div>
-            <div>{{ file }}</div>
-            <div v-for="result in results" :key="result.name">
-                {{ result.name }}
-            </div>
+            <input name="file" type="file" accept="application/JSON" @change="onFileChange" required/>
         </div>
     </div>
 </template>
@@ -21,33 +15,11 @@
 <script lang="ts">
     import { defineComponent } from 'vue'
 
-    interface Data {
-        file: null | File;
-        isLoading: boolean;
-        results: object[];
-    }
     export default defineComponent({
         name: 'Upload',
-        data (): Data {
-            return {
-                file: null,
-                isLoading: false,
-                results: []
-            }
-        },
-        watch: {
-            file (value) {
-                console.log(value)
-            }
-        },
         methods: {
-            loadIssues () {
-                this.results = [
-                    { name: 'issue 1' },
-                    { name: 'issue 2' },
-                    { name: 'issue 3' },
-                    { name: 'issue 4' }
-                ]
+            onFileChange (file: File) {
+                this.$emit('file-uploaded', file)
             }
         }
     })

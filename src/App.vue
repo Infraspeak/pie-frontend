@@ -5,7 +5,7 @@
         </svg>
     </header>
     <main>
-        <uploadFiles />
+        <FileUploader @file-uploaded="onFileUploaded"/>
     </main>
 </template>
 
@@ -13,15 +13,15 @@
     import { defineComponent } from 'vue'
     import Pusher from 'pusher-js'
 
-    import uploadFiles from './components/FileUploader.vue'
+    import FileUploader from './components/FileUploader.vue'
 
     Pusher.logToConsole = true
 
-    const pusher = new Pusher('9e8983378d5ecccac51e', {
-        cluster: 'eu'
-    })
+    // const pusher = new Pusher('9e8983378d5ecccac51e', {
+    //     cluster: 'eu'
+    // })
 
-    const channel = pusher.subscribe('my-channel')
+    // const channel = pusher.subscribe('my-channel')
 
     interface ComponentData {
         uuid: string | null;
@@ -54,7 +54,7 @@
     export default defineComponent({
         name: 'App',
         components: {
-            uploadFiles
+            FileUploader
         },
         data (): ComponentData {
             return {
@@ -64,16 +64,14 @@
                 results: []
             }
         },
+        watch: {
+            file (value) {
+                console.log('file', value)
+            }
+        },
         methods: {
-            loadIssues () {
-                const uuid = Math.random()
-
-                console.log('uuid', uuid)
-
-                this.results = []
-            },
-            onIssuesUpdate (data: object) {
-                console.log(data)
+            onFileUploaded (file: File) {
+                this.file = file
             },
             createUUID () {
                 return 'xxxxxxxx-xxxx-4xxx-yxxx-xxxxxxxxxxxx'.replace(/[xy]/g, function (c) {
@@ -92,14 +90,13 @@
                 })
 
                 const data = await reponse.json()
-
                 console.log('data', data)
             }
         },
         async created () {
-            await this.generateUUID()
+            // await this.generateUUID()
 
-            channel.bind('my-event', this.onIssuesUpdate)
+            // channel.bind('my-event', this.onIssuesUpdate)
         }
     })
 </script>
