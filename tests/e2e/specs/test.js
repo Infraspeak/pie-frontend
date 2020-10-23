@@ -30,9 +30,12 @@ describe('My First Test', () => {
 
 	it('Upload file', () => {
 		cy.visit('/')
-		
 		const yourFixturePath = 'package_example.json';
 		cy.get('input').attachFile(yourFixturePath);
+
+		cy.get('.loading')
+
+
 		cy.window()
 		.then((win) => {
 			const uuid = win.uuid
