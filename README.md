@@ -32,3 +32,16 @@ yarn lint
 
 ### Customize configuration
 See [Configuration Reference](https://cli.vuejs.org/config/).
+
+
+## PRODUCTION BUILD
+
+### Build Docker
+```
+docker build -t {image}:{tag}
+```
+
+### Run Container
+```
+docker run -p 80:80 {image}:{tag}
+```
