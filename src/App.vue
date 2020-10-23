@@ -67,7 +67,7 @@
         issues: Issue[];
     }
 
-    const API_FILES_ENPOINT = 'http://0e3edfecced9.ngrok.io/api/files'
+    const API_FILES_ENPOINT = 'http://a4e49f694fb7.ngrok.io/api/files'
 
     export default defineComponent({
         name: 'App',
@@ -99,7 +99,7 @@
         },
         methods: {
             async onFileUploaded (file: File) {
-                this.isLoading = true
+                // this.isLoading = true
 
                 this.file = file
                 const win = window as any
