@@ -63,7 +63,6 @@
         margin-bottom: 7rem;
         margin-top: 0
     }
-
     svg {
         position: absolute;
         left: 50%;
