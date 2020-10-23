@@ -1,18 +1,30 @@
 <template>
-  <img alt="Vue logo" src="./assets/logo.png">
-  <HelloWorld msg="Welcome to Your Vue.js + TypeScript App"/>
+    <div>
+        <form>
+            <label for="file">Insert file</label>
+            <input name="file" type="file" accept="application/JSON" @v-model="file"/>
+            <button>Upload</button>
+        </form>
+    </div>
+
 </template>
 
 <script lang="ts">
-import { defineComponent } from 'vue'
-import HelloWorld from './components/HelloWorld.vue'
+    import { defineComponent } from 'vue'
 
-export default defineComponent({
-  name: 'App',
-  components: {
-    HelloWorld
-  }
-})
+    export default defineComponent({
+        name: 'App',
+        data () {
+            return {
+                file: null
+            }
+        },
+        watch: {
+            file (value) {
+                console.log(value)
+            }
+        }
+    })
 </script>
 
 <style lang="scss">
