@@ -23,20 +23,82 @@
 
     const channel = pusher.subscribe('my-channel')
 
+    interface ComponentData {
+        uuid: string | null;
+        file: File | null;
+        isLoading: boolean;
+        results: Result[];
+    }
+
+    type IssueStatus = 'open' | 'closed'
+
+    interface Issue {
+        url: string;
+        title: string;
+        description: string;
+        author: string;
+        status: IssueStatus;
+        tags: string[];
+        id: string;
+        date_opened: any;
+    }
+
+    interface Result {
+        repo: {
+            name: string;
+            url: string;
+        };
+        issues: Issue[];
+    }
+
     export default defineComponent({
         name: 'App',
         components: {
             uploadFiles
         },
-        data () {
-            return {}
-        },
-        methods: {
-            onIssuesUpdate (data: object) {
-                console.log(data)
+        data (): ComponentData {
+            return {
+                uuid: null,
+                file: null,
+                isLoading: false,
+                results: []
             }
         },
-        created () {
+        methods: {
+            loadIssues () {
+                const uuid = Math.random()
+
+                console.log('uuid', uuid)
+
+                this.results = []
+            },
+            onIssuesUpdate (data: object) {
+                console.log(data)
+            },
+            createUUID () {
+                return 'xxxxxxxx-xxxx-4xxx-yxxx-xxxxxxxxxxxx'.replace(/[xy]/g, function (c) {
+                    const r = Math.random() * 16 | 0; const v = c === 'x' ? r : (r & 0x3 | 0x8)
+                    return v.toString(16)
+                })
+            },
+            async generateUUID () {
+                this.uuid = this.createUUID()
+
+                const reponse = await fetch('url', {
+                    method: 'POST',
+                    body: JSON.stringify({
+                        uuid: this.uuid
+                    })
+                })
+
+                const data = await reponse.json()
+
+                console.log('data', data)
+            }
+        },
+        async created () {
+            await this.generateUUID()
+
             channel.bind('my-event', this.onIssuesUpdate)
         }
     })
