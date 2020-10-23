@@ -21,10 +21,25 @@
 
 <script lang="ts">
     import { defineComponent } from 'vue'
+    import Pusher from 'pusher-js'
+
+    Pusher.logToConsole = true
+
+    const pusher = new Pusher('9e8983378d5ecccac51e', {
+        cluster: 'eu'
+    })
+
+    const channel = pusher.subscribe('my-channel')
+
+    interface Data {
+        file: null | File;
+        isLoading: boolean;
+        results: object[];
+    }
 
     export default defineComponent({
         name: 'App',
-        data () {
+        data (): Data {
             return {
                 file: null,
                 isLoading: false,
@@ -39,13 +54,18 @@
         methods: {
             loadIssues () {
                 this.results = [
-                    this.isLoading = true,
                     { name: 'issue 1' },
                     { name: 'issue 2' },
                     { name: 'issue 3' },
                     { name: 'issue 4' }
                 ]
+            },
+            onIssuesUpdate (data: object) {
+                console.log(data)
             }
+        },
+        created () {
+            channel.bind('my-event', this.onIssuesUpdate)
         }
     })
 </script>
