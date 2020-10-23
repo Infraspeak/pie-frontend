@@ -14,7 +14,7 @@
                     </p>
                 </div>
                 <span>{{ issue.status }}</span>
-                <span>{{ issue.id }} opened {{issue.date_opened}} ago by {{issue.author}}</span>
+                <span>#{{ issue.id }} opened {{issue.date_opened}} ago by {{issue.author}}</span>
             </div>
         </div>
     </div>
@@ -50,6 +50,7 @@
             }
             .issues {
                 > div {
+                    color: var(--black);
                     .tags {
                         display: flex;
 
@@ -64,11 +65,11 @@
 
                 span {
                     &:first-child {
-                        color: var(--black)
+                        color: var(--description);
                     }
 
                     &:last-child {
-                        color: var(--description)
+                        color: var(--description);
                     }
                 }
             }
