@@ -32,7 +32,11 @@
 
     Pusher.logToConsole = true
 
-    const pusher = new Pusher('9e8983378d5ecccac51e', {
+    const API_FILES_ENPOINT = 'http://a4e49f694fb7.ngrok.io/api/files'
+    const APP_KEY = '9e8983378d5ecccac51e'
+    const ISSUES_EVENT = 'parsed-file'
+
+    const pusher = new Pusher(APP_KEY, {
         cluster: 'eu'
     })
 
@@ -68,8 +72,6 @@
         };
         issues: Issue[];
     }
-
-    const API_FILES_ENPOINT = 'http://a4e49f694fb7.ngrok.io/api/files'
 
     export default defineComponent({
         name: 'App',
@@ -124,13 +126,13 @@
                 }
             },
             onMyEvent (data: any) {
-                this.result = data.payload as Result
-                console.log(this.result)
+                console.log(data)
+                this.results = [data.payload as Result]
             }
         },
         mounted () {
             this.channel = pusher.subscribe(this.channelName)
-            this.channel.bind('parsed-file', this.onMyEvent)
+            this.channel.bind(ISSUES_EVENT, this.onMyEvent)
         },
         unmounted () {
             pusher.unsubscribe(this.channelName)
