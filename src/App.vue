@@ -32,8 +32,8 @@
 
     Pusher.logToConsole = true
 
-    const API_FILES_ENPOINT = 'http://a4e49f694fb7.ngrok.io/api/files'
-    const APP_KEY = '9e8983378d5ecccac51e'
+    const API_FILES_ENPOINT = 'http://localhost:8080/api/files'
+    const APP_KEY = 'a51cc72f1f2e062e428f'
     const ISSUES_EVENT = 'parsed-file'
 
     const pusher = new Pusher(APP_KEY, {
