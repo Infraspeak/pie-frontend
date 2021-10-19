@@ -1,13 +1,18 @@
-# frontend
+# Quality Frontend
 
-## Project setup
+## Description
+Main page for Infraspeak Pie. Allows uploading a package.json or composer.json file and list all issues for all dependencies.
+
+## Project Setup
+### Build Docker
 ```
-npm run install
+docker build -t infraspeak-pie/quality_frontend -f Dockerfile .
 ```
 
-### Compiles and hot-reloads for development
+## Project Run
+### Run Docker
 ```
-npm run serve
+docker run --rm --network infraspeak-pie -p 8090:80 infraspeak-pie/quality_frontend
 ```
 
 ### Compiles and minifies for production
@@ -15,33 +20,7 @@ npm run serve
 npm run build
 ```
 
-### Run your unit tests
-```
-npm run test:unit
-```
-
 ### Run your end-to-end tests
 ```
 npm run test:e2e
-```
-
-### Lints and fixes files
-```
-npm run lint
-```
-
-### Customize configuration
-See [Configuration Reference](https://cli.vuejs.org/config/).
-
-
-## PRODUCTION BUILD
-
-### Build Docker
-```
-docker build -t {image}:{tag}
-```
-
-### Run Container
-```
-docker run -p 80:80 {image}:{tag}
 ```
