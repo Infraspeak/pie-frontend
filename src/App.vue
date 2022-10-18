@@ -9,7 +9,7 @@
             <li @click="issueList = true">{{ file.name }}</li>
         </ul>
     </header>
-    <main>
+    <main :class="{'main-list': results.length}">
         <template v-if="!issueList">
             <FileUploader v-show="!file && !isLoading" @file-uploaded="onFileUploaded" :error="error"/>
             <Loading v-show="isLoading" />
@@ -188,6 +188,10 @@
     flex-direction: column;
     align-items: center;
     justify-content: center;
+  }
+
+  .main-list {
+     height: auto;
   }
 }
 </style>
