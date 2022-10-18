@@ -21,6 +21,9 @@
             <p>Drag your <b>package.json</b> or <b>composer.json</b> into the oven <br/> or <span>add it manually</span></p>
             <input name="file" type="file" accept="application/JSON" @change="onFileChange($event.target.files)" required/>
         </div>
+        <div class="error" v-show="error">
+            {{ error }}
+        </div>
     </div>
 </template>
 
@@ -29,6 +32,7 @@
 
     export default defineComponent({
         name: 'Upload',
+        props: ['error'],
         methods: {
             onFileChange (files: File[]) {
                 this.$emit('file-uploaded', files[0])
@@ -90,6 +94,14 @@
             height: 100%;
             cursor: pointer;
         }
+    }
+    .error {
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        color: rgb(255, 0, 0);
+        font-size: 5rem;
+        margin-top: 30px;
     }
 }
 </style>
