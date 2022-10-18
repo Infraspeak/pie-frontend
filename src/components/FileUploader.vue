@@ -18,7 +18,7 @@
             </defs>
         </svg>
         <div class="upload">
-            <p>Drag your <b>package.json</b> or <b>composer.json</b>into the oven <br/> or <span>add it manually</span></p>
+            <p>Drag your <b>package.json</b> or <b>composer.json</b> into the oven <br/> or <span>add it manually</span></p>
             <input name="file" type="file" accept="application/JSON" @change="onFileChange($event.target.files)" required/>
         </div>
     </div>
