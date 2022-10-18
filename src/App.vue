@@ -11,7 +11,7 @@
     </header>
     <main>
         <template v-if="!issueList">
-            <FileUploader v-show="!file && !isLoading" @file-uploaded="onFileUploaded"/>
+            <FileUploader v-show="!file && !isLoading" @file-uploaded="onFileUploaded" :error="error"/>
             <Loading v-show="isLoading" />
             <Ready v-show="file && !isLoading" />
         </template>
@@ -123,9 +123,19 @@
                         headers: {
                             Accept: 'application/json'
                         }
+                    }).then((response) => {
+                        if (!response.ok) {
+                            return response.text().then(text => {
+                                const errorMessage = JSON.parse(text)
+                                throw new Error(errorMessage.error)
+                            })
+                        } else {
+                            console.log(response)
+                        }
                     })
                 } catch (error) {
-                    this.error = 'Error loading issues'
+                    this.error = error
+                    this.file = null
                 } finally {
                     this.isLoading = false
                 }
