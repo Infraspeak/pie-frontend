@@ -121,7 +121,6 @@
                     })
                 } catch (error) {
                     this.error = 'Error loading issues'
-                    console.log(this.error)
                 } finally {
                     this.isLoading = false
                 }
