@@ -35,9 +35,14 @@
     const API_FILES_ENPOINT = process.env.VUE_APP_API_FILES_ENPOINT
     const APP_KEY = process.env.VUE_APP_APP_KEY
     const ISSUES_EVENT = process.env.VUE_APP_ISSUES_EVENT
+    const SOKETI_HOST = process.env.VUE_APP_SOKETI_HOST
 
     const pusher = new Pusher(APP_KEY, {
-        cluster: 'eu'
+        wsHost: SOKETI_HOST,
+        wsPort: 6001,
+        forceTLS: false,
+        disableStats: true,
+        enabledTransports: ['ws', 'wss']
     })
 
     interface ComponentData {
