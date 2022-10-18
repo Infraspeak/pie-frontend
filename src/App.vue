@@ -13,7 +13,7 @@
         <template v-if="!issueList">
             <FileUploader v-show="!file && !isLoading" @file-uploaded="onFileUploaded"/>
             <Loading v-show="isLoading" />
-            <Ready v-show="file && !isLoading" />
+            <Ready v-show="file && !isLoading" @on-explore="issueList = true" />
         </template>
         <IssueList v-else :results="results" />
     </main>
