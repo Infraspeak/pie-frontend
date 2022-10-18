@@ -1,12 +1,12 @@
 <template>
     <div class="list">
         <div :key="result.repo.name" v-for="result in results">
-            <a :href="result.repo.url" target="_blank">
-                <h1>{{ result.repo.name }}</h1>
+            <a :href="result.repo.url" class="list-repo-title" target="_blank">
+                <h2>{{ result.repo.name }}</h2>
             </a>
             <div class="issues" v-for="issue in result.issues" :key="issue.name">
                 <div>
-                    <a :href="issue.url">
+                    <a :href="issue.url" >
                         <h2>{{ issue.title }}</h2>
                     </a>
                     <p v-for="tag in issue.tags" :key="tag" class="tags">
@@ -34,21 +34,30 @@
 <style lang="scss">
     .list {
         background-color: var(--issues);
-        height: 100%;
         width: 100%;
         padding: 1rem 1rem;
 
         > div{
-            border-bottom: 2px solid var(--grey);
+            border-top: 2px solid var(--grey);
+            margin-top: 32px;
 
             a {
             text-decoration: none;
-                h1 {
+                h2 {
                     color: var(--dark-blue);
                     display: inline-block;
                 }
             }
+            .list-repo-title {
+                h2 {
+                    font-size: 25px;
+                    text-transform: uppercase;
+                    color: var(--blue);
+                }
+            }
             .issues {
+                border-top: 1px solid var(--grey);
+                padding-bottom: 10px;
                 > div {
                     color: var(--black);
                     .tags {

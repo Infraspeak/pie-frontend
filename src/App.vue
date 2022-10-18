@@ -15,7 +15,7 @@
             <Loading v-show="isLoading" />
             <Ready v-show="file && !isLoading" />
         </template>
-        <IssueList v-else :results="results" />
+        <IssueList v-else-if="results.length && !isLoading" :results="results" />
     </main>
 </template>
 
@@ -132,7 +132,7 @@
             },
             onMyEvent (data: any) {
                 console.log(data)
-                this.results = [data.payload as Result]
+                this.results.push(data.payload as Result)
             }
         },
         mounted () {
@@ -153,6 +153,7 @@
       display: flex;
       background-color: var(--dark-blue);
       align-items: center;
+      position: sticky;
 
       ul {
           align-self: flex-end;
