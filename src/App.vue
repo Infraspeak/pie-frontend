@@ -32,9 +32,9 @@
 
     Pusher.logToConsole = true
 
-    const API_FILES_ENPOINT = 'http://localhost:8080/api/files'
-    const APP_KEY = 'a51cc72f1f2e062e428f'
-    const ISSUES_EVENT = 'parsed-file'
+    const API_FILES_ENPOINT = process.env.VUE_APP_API_FILES_ENPOINT
+    const APP_KEY = process.env.VUE_APP_APP_KEY
+    const ISSUES_EVENT = process.env.VUE_APP_ISSUES_EVENT
 
     const pusher = new Pusher(APP_KEY, {
         cluster: 'eu'
